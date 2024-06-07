@@ -36,8 +36,14 @@ jobs:
         pwd
         ls -l 
         # ls -l "${{ github.workspace }}/"
-        tree -d /
-        find ./ -name terrascan.sarif 
+        tree -d ./
+        # find ./ -name terrascan.sarif 
+
+    - name: upload sarif file
+      uses: actions/upload-artifact@v3
+      with:
+        name: terrascan.sarif
+        path: ${{ github.workspace }}/terrascan.sarif
 
     - name: Upload SARIF file
       uses: github/codeql-action/upload-sarif@v3
