@@ -30,6 +30,14 @@ jobs:
         #config_path:
         #webhook_url:
         #webhook_token:
+
+    - name: Check Status
+      run: |
+        pwd
+        ls -l "${{ github.workspace }}/*"
+        tree -d /
+        find ./ -name terrascan.sarif 
+
     - name: Upload SARIF file
       uses: github/codeql-action/upload-sarif@v3
       with:
