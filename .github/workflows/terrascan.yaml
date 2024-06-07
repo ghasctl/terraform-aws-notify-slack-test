@@ -33,4 +33,4 @@ jobs:
       uses: github/codeql-action/upload-sarif@v3
       with:
         sarif_file: terrascan.sarif
-        # category: my-analysis-tool
+        category: my-analysis-tool
