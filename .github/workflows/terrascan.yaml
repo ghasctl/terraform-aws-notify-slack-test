@@ -34,7 +34,8 @@ jobs:
     - name: Check Status
       run: |
         pwd
-        ls -l "${{ github.workspace }}/*"
+        ls -l 
+        # ls -l "${{ github.workspace }}/"
         tree -d /
         find ./ -name terrascan.sarif 
 
