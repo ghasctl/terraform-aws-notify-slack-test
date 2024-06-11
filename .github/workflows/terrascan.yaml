@@ -37,9 +37,8 @@ jobs:
         ls -l 
         # ls -l "${{ github.workspace }}/"
         # tree -d ./
-        sed -i 's/git:://g' terrascan.sarif
-        grep -i uri terrascan.sarif
-        grep -i 's/https:\/\/github.com\///g' terrascan.sarif
+        # sed -i 's/git:://g' terrascan.sarif
+        sed -i 's/git::https:\/\/github.com\///g' terrascan.sarif
         grep -i uri terrascan.sarif
 
     - name: upload sarif file
