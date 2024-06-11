@@ -39,6 +39,8 @@ jobs:
         # tree -d ./
         sed -i 's/git:://g' terrascan.sarif
         grep -i uri terrascan.sarif
+        grep -i 's/https:\/\/github.com\///g' terrascan.sarif
+        grep -i uri terrascan.sarif
 
     - name: upload sarif file
       uses: actions/upload-artifact@v3
