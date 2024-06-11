@@ -31,18 +31,20 @@ jobs:
         #webhook_url:
         #webhook_token:
 
-    - name: Check Status
+    - name: Check Status and update Sarif
       run: |
         pwd
         ls -l 
         # ls -l "${{ github.workspace }}/"
-        tree -d ./
+        # tree -d ./
+        sed -i 's/git:://g' terrascan.sarif
+        grep -i uri terrascan.sarif
 
-    # - name: upload sarif file
-    #   uses: actions/upload-artifact@v3
-    #   with:
-    #     name: terrascan.sarif
-    #     path: ${{ github.workspace }}/terrascan.sarif
+    - name: upload sarif file
+      uses: actions/upload-artifact@v3
+      with:
+        name: terrascan.sarif
+        path: ${{ github.workspace }}/terrascan.sarif
 
     - name: Upload SARIF file
       uses: github/codeql-action/upload-sarif@v3
