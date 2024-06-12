@@ -35,14 +35,14 @@ jobs:
           # sed -i 's/git::https:\/\/github.com\///g' terrascan.sarif
           # grep -i uri terrascan.sarif
 
-      - name: upload sarif file
-        uses: actions/upload-artifact@v3
-        with:
-          name: tfsec.sarif
-          path: ${{ github.workspace }}/tfsec.sarif
+      # - name: upload sarif file
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: tfsec.sarif
+      #     path: ${{ github.workspace }}/tfsec.sarif
 
-      - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          # Path to SARIF file relative to the root of the repository
-          sarif_file: tfsec.sarif         
+      # - name: Upload SARIF file
+      #   uses: github/codeql-action/upload-sarif@v3
+      #   with:
+      #     # Path to SARIF file relative to the root of the repository
+      #     sarif_file: tfsec.sarif         
