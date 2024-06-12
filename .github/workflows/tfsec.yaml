@@ -22,7 +22,8 @@ jobs:
         with:
           # sarif_file: tfsec.sarif
           soft_fail: true 
-          format: 'csv,sarif'     
+          format: sarif    
+          additional_args: --out tfsec.sarif
 
       - name: Check Status and update Sarif
         run: |
