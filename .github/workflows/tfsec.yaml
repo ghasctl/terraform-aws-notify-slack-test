@@ -21,7 +21,24 @@ jobs:
         uses: aquasecurity/tfsec-action@v1.0.0
         with:
           # sarif_file: tfsec.sarif
-          soft_fail: true        
+          soft_fail: true 
+          format: 'csv,sarif'     
+
+      - name: Check Status and update Sarif
+        run: |
+          pwd
+          ls -l 
+          # ls -l "${{ github.workspace }}/"
+          tree -d ./
+          # sed -i 's/git:://g' terrascan.sarif
+          # sed -i 's/git::https:\/\/github.com\///g' terrascan.sarif
+          # grep -i uri terrascan.sarif
+
+      # - name: upload sarif file
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: tfsec.sarif
+      #     path: ${{ github.workspace }}/tfsec.sarif
 
       # - name: Upload SARIF file
       #   uses: github/codeql-action/upload-sarif@v3
