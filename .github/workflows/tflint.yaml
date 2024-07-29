@@ -1,0 +1,81 @@
+name: Pull Request Workflow
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+
+# permissions:
+#     id-token: write # This is required for requesting the JWT
+#     contents: read  # This is required for actions/checkout
+
+# jobs:
+#   tfsec:
+#     name: tfsec sarif report
+#     runs-on: ubuntu-latest
+#     permissions:
+#       actions: read
+#       contents: read
+#       security-events: write
+#     steps:
+#       - name: Clone repo
+#         uses: actions/checkout@v4
+#         with:
+#           persist-credentials: false
+
+#       - name: tfsec
+#         uses: aquasecurity/tfsec-sarif-action@v0.1.4
+#         with:
+#           sarif_file: tfsec.sarif          
+
+#       - name: Upload SARIF file
+#         uses: github/codeql-action/upload-sarif@v3
+#         with:
+#           # Path to SARIF file relative to the root of the repository
+#           sarif_file: tfsec.sarif         
+
+
+jobs:
+
+  tflint:
+    name: Run TFLint
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    # needs: [get-changes]
+    # strategy:
+    #   matrix:
+    #     dir_names: ${{ fromJSON(needs.get-changes.outputs.matrix) }}
+    #   max-parallel: 5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/cache@v4
+        name: Cache plugin dir
+        with:
+          path: ~/.tflint.d/plugins
+          key: tflint-${{ hashFiles('.tflint.hcl') }}
+
+      - uses: terraform-linters/setup-tflint@v4
+        name: Setup TFLint
+        with:
+          tflint_version: v0.50.3
+
+      - name: Show version
+        run: tflint --version
+
+      - name: Init TFLint
+        run: tflint --init
+
+      - name: Run TFLint
+        run: |
+          tflint \
+            --chdir=${{ matrix.dir_names }} \
+            --disable-rule=terraform_required_version \
+            --disable-rule=terraform_required_providers
+
